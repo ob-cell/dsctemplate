@@ -119,11 +119,37 @@ body {background-color: #2C2F33;}
   <a href="https://discord.gg/PyPDYkY9sv"><i class="fa fa-window-maximize"></i> Discord Server</a>
   <a href="https://discord.com/oauth2/authorize?client_id=700315775378128956&scope=bot&permissions=2146958847"><i class="fa fa-chevron-right"></i> Officiel <b>Bot</b></a>
   <a href="https://discord.com/api/oauth2/authorize?client_id=600396124745891870&redirect_uri=https%3A%2F%2Fboypro8.github.io%2Fdiscordtemplates&response_type=code&scope=identify%20guilds.join"><i class="fa fa-user-circle"></i> Login</a>
+	<div id="info">
+	Hoi!
+</div>
+<a id="login" style="display: none;" href="your-oauth2-url-here">Identify Yourself</a>
+<script>
+	window.onload = () => {
+		const fragment = new URLSearchParams(window.location.hash.slice(1));
+		const [accessToken, tokenType] = [fragment.get('access_token'), fragment.get('token_type')];
+
+		if (!accessToken) {
+			return document.getElementById('login').style.display = 'block';
+		}
+
+		fetch('https://discord.com/api/users/@me', {
+			headers: {
+				authorization: `${tokenType} ${accessToken}`,
+			},
+		})
+			.then(result => result.json())
+			.then(response => {
+				const { username, discriminator } = response;
+				document.getElementById('info').innerText += ` ${username}#${discriminator}`;
+			})
+			.catch(console.error);
+	};
+</script>
 </div>
         <body>
 
             <h1 style="color:white">Template Server List</h1>
-            <p1 style="color:white">Discord Template City! by <b>sir.wolf</b></p1>
+            <p1 style="color:white">Discord Template City!</p1>
         </body>
         <ul id="myMenu">
         </ul>
